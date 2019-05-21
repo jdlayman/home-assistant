@@ -15,6 +15,7 @@ from homeassistant.const import (
     PRESSURE_HPA, PRESSURE_INHG, TEMP_CELSIUS, TEMP_FAHRENHEIT)
 import homeassistant.helpers.config_validation as cv
 from homeassistant.util import Throttle
+from homeassistant.util.dt import DEFAULT_TIME_ZONE
 from homeassistant.util.pressure import convert as convert_pressure
 _LOGGER = logging.getLogger(__name__)
 
@@ -162,7 +163,7 @@ class DarkSkyWeather(WeatherEntity):
         if self._mode == 'daily':
             data = [{
                 ATTR_FORECAST_TIME:
-                    datetime.fromtimestamp(entry.d.get('time')).isoformat(),
+                    datetime.fromtimestamp(entry.d.get('time'), tz=DEFAULT_TIME_ZONE).isoformat(),
                 ATTR_FORECAST_TEMP:
                     entry.d.get('temperatureHigh'),
                 ATTR_FORECAST_TEMP_LOW:
@@ -179,7 +180,7 @@ class DarkSkyWeather(WeatherEntity):
         else:
             data = [{
                 ATTR_FORECAST_TIME:
-                    datetime.fromtimestamp(entry.d.get('time')).isoformat(),
+                    datetime.fromtimestamp(entry.d.get('time'), tz=DEFAULT_TIME_ZONE).isoformat(),
                 ATTR_FORECAST_TEMP:
                     entry.d.get('temperature'),
                 ATTR_FORECAST_PRECIPITATION:
